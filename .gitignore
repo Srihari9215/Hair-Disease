@@ -1,0 +1,11 @@
+# Virtual Environment
+venv/
+__pycache__/
+
+# Model and large files (Optional, but recommended if your model is huge)
+# If you choose to ignore the model, you must use a separate storage option (e.g., Google Drive or S3).
+# For now, let's include the model since it's only 99.82% split and should be manageable.
+
+# Operating System Files
+.DS_Store
+Thumbs.db
