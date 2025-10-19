@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Disease Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 4px;
+            background-color: #e8f5e9;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        /* Spinner CSS */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #4CAF50; /* Green color for the spinner */
+            animation: spin 1s ease infinite;
+            margin: 10px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Progress Bar CSS */
+        .progress-bar-container {
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-top: 10px;
+            height: 25px;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            text-align: left;
+        }
+        .progress-bar {
+            background-color: #4CAF50;
+            height: 100%;
+            color: white;
+            padding-left: 10px;
+            line-height: 25px;
+            border-radius: 5px 0 0 5px;
+            transition: width 0.5s ease;
+            box-sizing: border-box; /* Include padding in width calculation */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Hair Disease AI Predictor</h1>
+        
+        <img id="image-preview" src="#" alt="Image Preview" 
+             style="max-width: 100%; max-height: 200px; display: none; border-radius: 4px; margin-bottom: 20px; border: 1px solid #ccc;">
+
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" id="file-input" required>
+            <input type="submit" value="Predict Disease" id="submit-btn">
+            
+            <div id="loading" style="display:none; margin-top: 20px;">
+                <div class="spinner"></div>
+                <p>Analyzing image, please wait...</p>
+            </div>
+        </form>
+
+        {% if result %}
+            <div class="result">
+                <h2>Prediction Result</h2>
+                <p><strong>Predicted Disease:</strong> {{ result.class_name }}</p>
+                
+                <p><strong>Confidence Score:</strong></p>
+                <div class="progress-bar-container">
+                    {% set confidence_value = result.confidence[:-1] | float %}
+                    <div class="progress-bar" style="width: {{ confidence_value }}%;">
+                        {{ result.confidence }}
+                    </div>
+                </div>
+                
+                <p style="font-size: 0.8em; color: #666; margin-top: 15px;">
+                    Disclaimer: This is an AI prediction and should not replace professional medical advice.
+                </p>
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <p class="error">Error: {{ error }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        const submitBtn = document.getElementById('submit-btn');
+        const loadingDiv = document.getElementById('loading');
+        const fileInput = document.getElementById('file-input');
+        const preview = document.getElementById('image-preview');
+
+        // 1. Loading Spinner Logic
+        form.addEventListener('submit', function() {
+            // Only show spinner if a file is selected
+            if (fileInput.files.length > 0) {
+                loadingDiv.style.display = 'block';
+                submitBtn.style.display = 'none'; // Hide button while loading
+            }
+            // Note: The form submits, and Flask re-renders the page upon completion.
+        });
+
+        // 2. Image Preview Logic
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '#';
+                preview.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
