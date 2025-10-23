@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Health Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 15px;
+        }
+
+        .container {
+            background-color: #ffffffee;
+            padding: 35px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        h1 {
+            color: #00796B;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        p.subtitle {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin: 20px 0 40px 0;
+            background: linear-gradient(90deg, #00796B, #43A047);
+            color: white;
+            text-decoration: none;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .tips-section {
+            text-align: left;
+            margin-top: 20px;
+            border-top: 2px solid #00796B;
+            padding-top: 30px;
+        }
+
+        .tips-section h2 {
+            color: #43A047;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .tip-card {
+            background-color: #e0f7fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .tip-card h3 {
+            color: #00796B;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .tip-card h3::before {
+            content: '✨';
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Hair Health Hub</h1>
+        <p class="subtitle">Your first step towards a healthier scalp and stronger hair, powered by AI.</p>
+
+        <a href="{{ url_for('predict') }}" class="cta-button">
+            Launch AI Predictor
+        </a>
+
+        <div class="tips-section">
+            <h2>General Hair Health Tips</h2>
+            
+            <div class="tip-card">
+                <h3>Balanced Diet is Key</h3>
+                <p>Ensure your diet is rich in **protein**, **iron**, and **B vitamins** (especially Biotin). These nutrients are the building blocks for strong, vibrant hair. Think lean meats, eggs, nuts, and leafy greens.</p>
+            </div>
+
+            <div class="tip-card">
+                <h3>Gentle Cleansing</h3>
+                <p>Wash your hair regularly, but avoid harsh, **sulfate-heavy shampoos** which can strip natural oils. Massage your scalp gently to stimulate blood flow, and always rinse thoroughly with lukewarm water.</p>
+            </div>
+
+            <div class="tip-card">
+                <h3>Minimize Heat and Chemicals</h3>
+                <p>Limit the use of **heat styling tools** (blow dryers, straighteners) and chemical treatments (bleaching, perming). When you do use heat, apply a heat protectant spray first.</p>
+            </div>
+
+            <div class="tip-card">
+                <h3>Hydration & Stress Management</h3>
+                <p>Drink plenty of water and practice **stress reduction techniques** like meditation or regular exercise. High stress levels are a common trigger for various hair loss conditions.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
